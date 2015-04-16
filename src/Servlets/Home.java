@@ -24,7 +24,7 @@ import java.util.List;
 public class Home extends HttpServlet {
 
 
-    private static final int THRESHOLD_SIZE     = 1024 * 1024 * 3;  // 3MB
+    private static final int THRESHOLD_SIZE     = 1024 * 1024 * 10;  // 3MB
     private static final int MAX_FILE_SIZE      = 1024 * 1024 * 400; // 400MB
     private static final int MAX_REQUEST_SIZE   = 1024 * 1024 * 500; // 500MB
 
@@ -45,7 +45,8 @@ public class Home extends HttpServlet {
         upload.setSizeMax(MAX_REQUEST_SIZE);
         String filePath = "";
         List formItems = null;
-
+        int orient = 90;
+        String fileName = "";
         int time=1, minLimit=5, maxLimit=150;
         try {
             formItems = upload.parseRequest(request);
@@ -55,8 +56,8 @@ public class Home extends HttpServlet {
             while (iter.hasNext()) {
                 FileItem item = (FileItem) iter.next();
                 // processes only fields that are not form fields
-                if (!item.isFormField()) {
-                    String fileName = new File(item.getName()).getName();
+                if (!item.isFormField() && fileName.isEmpty()) {
+                    fileName = new File(item.getName()).getName();
                     filePath = UPLOAD_DIRECTORY + fileName;
                     File storeFile = new File(filePath);
                     System.out.println(filePath);
@@ -71,6 +72,14 @@ public class Home extends HttpServlet {
                     }
                     if(item.getFieldName().equalsIgnoreCase("Max")) {
                         maxLimit = Integer.parseInt(item.getString());
+                    }
+                    if(item.getFieldName().equalsIgnoreCase("orientation")) {
+                        orient = Integer.parseInt(item.getString());
+                    }
+                    if(item.getFieldName().equalsIgnoreCase("dFile")) {
+                        fileName = item.getString();
+                        filePath = UPLOAD_DIRECTORY + fileName;
+                        System.out.println(filePath);
                     }
                 }
         }
@@ -87,6 +96,7 @@ public class Home extends HttpServlet {
         session.setAttribute("MinLimit", minLimit);
         session.setAttribute("MaxLimit", maxLimit);
         session.setAttribute("FilePath", filePath);
+        session.setAttribute("Orient", orient);
         /*System.out.println("time: " + time + "minLimit: " + minLimit + "maxLimit: " + maxLimit + "filePath: "+ filePath);*/
         response.sendRedirect("waiting");
     }

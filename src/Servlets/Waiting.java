@@ -27,9 +27,9 @@ public class Waiting extends HttpServlet {
         String filePath = (String) request.getSession().getAttribute("FilePath");
         String rootPath = (String) request.getSession().getAttribute("RootPath");
         GetFrequency gf = new GetFrequency();
-        int prefix = (int) Math.floor(Math.random() * 1000);
-        int intervals = gf.startLDA(filePath, time, rootPath, minLimit, maxLimit, prefix);
-        String fileName = "Outputs/topic_words"+String.valueOf(prefix);
+//        int prefix = (int) Math.floor(Math.random() * 1000);
+        int intervals = gf.startLDA(filePath, time, rootPath, minLimit, maxLimit);
+        String fileName = "Outputs/topic_words";//+String.valueOf(prefix);
         request.getSession().removeAttribute("Time");
         request.getSession().removeAttribute("MinLimit");
         request.getSession().removeAttribute("MaxLimit");

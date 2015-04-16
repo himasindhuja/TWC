@@ -18,7 +18,7 @@ public class Result extends HttpServlet {
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         response.setHeader("Pragma", "no-cache"); // HTTP 1.0
         response.setDateHeader("Expires", 0); // Proxies.
-        request.getRequestDispatcher("/result.jsp?").forward(request, response);
+        request.getRequestDispatcher("/result.jsp?"+Math.floor(Math.random() * 1000)).forward(request, response);
         /*System.out.println("Welcome2");*/
     }
 }

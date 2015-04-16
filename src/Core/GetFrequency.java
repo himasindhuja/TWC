@@ -112,7 +112,7 @@ public class GetFrequency {
 		out.close();
 	}
 
-	public static int startLDA(String input , int timeInterval, String rootPath, int minLimit, int maxLimit, int prefix){
+	public static int startLDA(String input , int timeInterval, String rootPath, int minLimit, int maxLimit){
 		HashMap<String,Double> hm = new HashMap<String,Double>();
 		long start1 = System.currentTimeMillis();
 		Main.timeInterval = timeInterval;
@@ -122,7 +122,7 @@ public class GetFrequency {
 			e.printStackTrace();
 		}
 
-		String outputFolder = rootPath+"web"+File.separator+"Outputs"+File.separator+"topic_words"+String.valueOf(prefix);
+		String outputFolder = rootPath+"web"+File.separator+"Outputs"+File.separator+"topic_words";//+String.valueOf(prefix);
 		
 		int count = -1;
 		for(File inp: Main.intervalFilePtr) {
@@ -150,6 +150,6 @@ public class GetFrequency {
 	}
 	
 	public static void main(String[] args){
-		GetFrequency.startLDA("tp.txt", 1, "./", 2, 250, 1);
+		GetFrequency.startLDA("tp.txt", 1, "./", 2, 250);
 	}
 }
